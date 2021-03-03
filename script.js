@@ -1,45 +1,62 @@
 // Create GAME BOARD
 const gameBoard = () => {
+    let gameStatus = true;
     let currentSymb = 'O';
     let gameField = ['','','',
                     '','','',
                     '','','',];
 
+    // Creating the board
     for (let i=0; i<gameField.length; i++) {
+        
         createSquares(i).onclick = function() {
-            console.log(`${i} was clicked`);
-            if (gameField[i]==='' & currentSymb==='O') {
+
+            let restartBtn = document.getElementById("restart-btn");
+            let winContainer = document.getElementById("win-container");
+            let winMessage = document.getElementById("win-message");
+
+            if (gameField[i]==='' & currentSymb==='O' & gameStatus) {
                 const clickedSquare = document.getElementById(`${i}p`);
                 const xSymb = document.getElementById(`${i}`);
                 gameField[i] = "X";
-                console.log(gameField);
                 clickedSquare.innerText = "X";
                 currentSymb = "X";
                 xSymb.style.background = "#FF674D";
-                if (gameField[0]===currentSymb & gameField[0]===gameField[1]===gameField[2] ||
-                    gameField[3]===currentSymb & gameField[3]===gameField[4]===gameField[5] ||
-                    gameField[6]===currentSymb & gameField[6]===gameField[7]===gameField[8] ||
-                    gameField[0]===currentSymb & gameField[0]===gameField[3]===gameField[6] ||
-                    gameField[1]===currentSymb & gameField[1]===gameField[4]===gameField[7] ||
-                    gameField[2]===currentSymb & gameField[2]===gameField[5]===gameField[8] ||
-                    gameField[0]===currentSymb & gameField[0]===gameField[4]===gameField[8] ||
-                    gameField[2]===currentSymb & gameField[2]===gameField[4]===gameField[6]) {
-                        console.log(`${currentSymb} did win!`);
-                    }
-            } else if (gameField[i]==='' & currentSymb==='X') {
+                logMessage(gameField, gameStatus, winMessage, winContainer, currentSymb);
+
+            } else if (gameField[i]==='' & currentSymb==='X' & gameStatus) {
                 const clickedSquare = document.getElementById(`${i}p`);
                 const ySymb = document.getElementById(`${i}`);
                 gameField[i] = "O";
-                console.log(gameField);
                 clickedSquare.innerText = "O";
                 currentSymb = "O"; 
                 ySymb.style.background = "#CDC7E5";
+                logMessage(gameField, gameStatus, winMessage, winContainer, currentSymb);
+            }
+            restartBtn.onclick = function() {
+                container.innerHTML="";
+                winContainer.style.display = "none";
+                gameBoard();
             }
         }
     }
 }
 
-// Create SQUARES
+
+// Log the Winning/Draw message
+function logMessage(gameField, gameStatus, winMessage, winContainer, currentSymb) {
+    if (checkIfWin(gameField)) {
+        gameStatus = false;
+        winMessage.innerText = `${currentSymb} has won`;
+        winContainer.style.display = "flex";
+    } else if (checkIfWin(gameField)===false){
+        gameStatus = false;
+        winMessage.innerText = `It's a draw`;
+        winContainer.style.display = "flex";
+    }
+}
+
+// Creating SQUARES for the board
 function createSquares(i){
     const container = document.getElementById("container");
     const div = document.createElement("div");
@@ -49,10 +66,33 @@ function createSquares(i){
     div.id = i;
     div.classList.add("square");
     container.appendChild(div);
-    console.log(i);
     return div
-    return p
 }
+
+// Winning condition
+function checkIfWin(gF){
+    if (       
+        gF[0]!=='' & gF[0]===gF[1] & gF[1]===gF[2] ||
+        gF[3]!=='' & gF[3]===gF[4] & gF[4]===gF[5] ||
+        gF[6]!=='' & gF[6]===gF[7] & gF[7]===gF[8] ||
+        gF[0]!=='' & gF[0]===gF[3] & gF[3]===gF[6] ||
+        gF[1]!=='' & gF[1]===gF[4] & gF[4]===gF[7] ||
+        gF[2]!=='' & gF[2]===gF[5] & gF[5]===gF[8] ||
+        gF[0]!=='' & gF[0]===gF[4] & gF[4]===gF[8] ||
+        gF[2]!=='' & gF[2]===gF[4] & gF[4]===gF[6] 
+    ) {
+            return true
+        } else if (
+            gF[0]!=='' & gF[1]!=='' & gF[2]!=='' & gF[3]!=='' & 
+            gF[4]!=='' & gF[5]!=='' & gF[6]!=='' & gF[7]!=='' & gF[8]!==''
+        ) {
+            return false
+        }
+}
+
+
 
 // Initiate the game
 gameBoard();
+
+

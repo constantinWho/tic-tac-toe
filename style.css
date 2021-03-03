@@ -44,3 +44,47 @@ main {
     height: 9.2em;
     align-self: center;
 }
+
+#win-container {
+    height: 500px;
+    padding: 0;
+    background-color: #1e6412ca;
+    margin-top: 1.5em;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    display: none;
+}
+
+#win-message {
+    text-align: center;
+    cursor: default;
+    margin-right: 20px;
+    font-family: 'Amatic SC', cursive;
+    color: #e5e5e5;
+    font-size: 100px;
+    width: 100%;
+}
+
+#restart-btn {
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    height: 80px;
+    width: 160px;
+    font-size: 30px;
+    background-color: #c8e0c4ca;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    font-family: 'Exo 2', sans-serif;
+    color: rgb(182, 114, 114);
+    transition: all 200ms all ease-in-out;
+}
+
+#restart-btn:hover {
+    background-color: #5b9ae2ca;
+    transform: scale(1.01);
+    color: rgb(185, 35, 35);
+}
